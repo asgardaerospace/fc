@@ -2,7 +2,7 @@ import { Reveal } from "./Reveal";
 
 export function Manifesto() {
   return (
-    <section className="relative border-t border-white/5 bg-abyss py-28 sm:py-36">
+    <section id="premise" className="relative scroll-mt-20 border-t border-white/5 bg-abyss py-28 sm:py-36">
       <div className="mx-auto max-w-4xl px-5 sm:px-8">
         <Reveal>
           <p className="eyebrow">The premise</p>

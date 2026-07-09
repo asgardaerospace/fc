@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { ventures, type Venture } from "@/lib/site";
 import { Reveal } from "./Reveal";
 
@@ -5,6 +6,12 @@ const accentByGlyph: Record<Venture["glyph"], string> = {
   apps: "var(--color-aqua)",
   energy: "var(--color-ember)",
   yoga: "var(--color-amethyst)",
+};
+
+const imageByGlyph: Record<Venture["glyph"], string> = {
+  apps: "/img/venture-apps.webp",
+  energy: "/img/venture-energy.webp",
+  yoga: "/img/venture-yoga.webp",
 };
 
 function Glyph({ kind }: { kind: Venture["glyph"] }) {
@@ -48,28 +55,55 @@ function Card({ v, i }: { v: Venture; i: number }) {
   return (
     <Reveal delay={i * 0.1} as="li" className="h-full">
       <article
-        className="venture-card group flex h-full flex-col rounded-3xl border border-white/10 bg-gradient-to-b from-white/[0.04] to-transparent p-8 sm:p-9"
+        className="venture-card group relative flex h-full min-h-[460px] flex-col justify-between overflow-hidden rounded-3xl border border-white/10 p-8 sm:p-9"
         style={{ ["--accent-grad" as string]: v.gradient }}
       >
+        {/* Themed grove, darkened + tinted to the venture's accent */}
+        <div className="absolute inset-0 -z-10">
+          <Image
+            src={imageByGlyph[v.glyph]}
+            alt=""
+            fill
+            sizes="(max-width: 1024px) 100vw, 33vw"
+            className="object-cover opacity-55 transition-all duration-700 group-hover:scale-105 group-hover:opacity-70"
+          />
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(180deg, rgba(10,7,16,0.55) 0%, rgba(10,7,16,0.35) 40%, rgba(10,7,16,0.92) 100%)",
+            }}
+          />
+          <div
+            className="absolute inset-0 opacity-30 mix-blend-soft-light transition-opacity duration-700 group-hover:opacity-55"
+            style={{ background: v.gradient }}
+          />
+        </div>
+
         <div className="flex items-start justify-between">
-          <span style={{ color: accent }}>
+          <span
+            className="flex h-12 w-12 items-center justify-center rounded-xl border border-white/15 bg-void/40 backdrop-blur-sm"
+            style={{ color: accent }}
+          >
             <Glyph kind={v.glyph} />
           </span>
           <StatusChip status={v.status} accent={accent} />
         </div>
 
-        <p className="mt-8 font-mono text-xs uppercase tracking-[0.22em] text-faint">
-          {v.index} · {v.category}
-        </p>
-        <h3 className="mt-2 font-display text-3xl font-light tracking-tight text-mist">
-          {v.name}
-        </h3>
-        <p className="mt-4 flex-1 text-[0.975rem] leading-relaxed text-fog">{v.blurb}</p>
+        <div>
+          <p className="font-mono text-xs uppercase tracking-[0.22em] text-mist/70">
+            {v.index} · {v.category}
+          </p>
+          <h3 className="mt-2 font-display text-3xl font-light tracking-tight text-mist">
+            {v.name}
+          </h3>
+          <p className="mt-4 text-[0.975rem] leading-relaxed text-fog">{v.blurb}</p>
 
-        <div
-          className="mt-8 h-px w-full origin-left scale-x-100 opacity-40 transition-opacity duration-500 group-hover:opacity-90"
-          style={{ background: v.gradient }}
-        />
+          <div
+            className="mt-7 h-px w-full opacity-60 transition-opacity duration-500 group-hover:opacity-100"
+            style={{ background: v.gradient }}
+          />
+        </div>
       </article>
     </Reveal>
   );
