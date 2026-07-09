@@ -1,0 +1,234 @@
+@import "tailwindcss";
+
+/* ============================================================
+   Fairy Cauldron — design tokens
+   Palette sampled directly from the brand artwork: a rainbow
+   cauldron on near-black. The full spectrum IS the system.
+   ============================================================ */
+@theme {
+  /* Canvas — deep aubergine-black, not flat black */
+  --color-void: #0a0710;
+  --color-abyss: #070509;
+  --color-nightshade: #140d20;
+  --color-cauldron: #1b1230;
+
+  /* Ink */
+  --color-mist: #f2ecf8; /* primary text — warm white, violet tint */
+  --color-fog: #a99fbb; /* secondary text */
+  --color-faint: #6b6280; /* labels, hairline text */
+
+  /* Spectrum — the cauldron's emission */
+  --color-amethyst: #a362e6; /* brand primary (the wordmark violet, lifted) */
+  --color-amethyst-deep: #7c3aed;
+  --color-aqua: #2ed9d0;
+  --color-azure: #4c7df0;
+  --color-ember: #ff6b3d;
+  --color-flame: #f5433e;
+  --color-gold: #ffc024;
+  --color-rose: #f0508f;
+  --color-verdant: #46c97e;
+
+  /* Type roles */
+  --font-display: var(--font-fraunces), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", monospace;
+
+  /* Motion */
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ============================================================
+   Base
+   ============================================================ */
+* {
+  border-color: color-mix(in oklab, var(--color-mist) 10%, transparent);
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--color-void);
+  color: var(--color-mist);
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "cv01";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: color-mix(in oklab, var(--color-amethyst) 45%, transparent);
+  color: var(--color-mist);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-aqua);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* Thin, tasteful scrollbar */
+::-webkit-scrollbar { width: 11px; height: 11px; }
+::-webkit-scrollbar-track { background: var(--color-abyss); }
+::-webkit-scrollbar-thumb {
+  background: color-mix(in oklab, var(--color-amethyst) 40%, var(--color-abyss));
+  border-radius: 99px;
+  border: 3px solid var(--color-abyss);
+}
+
+/* ============================================================
+   Typographic helpers
+   ============================================================ */
+.font-display { font-family: var(--font-display); font-optical-sizing: auto; }
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--color-faint);
+}
+
+/* Spectral text — the signature ink treatment, used ONCE per view */
+.spectral-text {
+  background: linear-gradient(
+    100deg,
+    var(--color-amethyst) 0%,
+    var(--color-rose) 22%,
+    var(--color-ember) 44%,
+    var(--color-gold) 60%,
+    var(--color-aqua) 82%,
+    var(--color-azure) 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: spectral-drift 14s ease-in-out infinite;
+}
+
+@keyframes spectral-drift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Hairline that fades in the brand spectrum */
+.rule-spectrum {
+  height: 1px;
+  border: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-amethyst),
+    var(--color-aqua),
+    var(--color-ember),
+    var(--color-gold),
+    transparent
+  );
+  opacity: 0.5;
+}
+
+/* ============================================================
+   The signature — a living, brewing cauldron.
+   Layered aurora blobs drift slowly behind the logo mark;
+   embers rise. Everything obeys prefers-reduced-motion.
+   ============================================================ */
+.cauldron-stage {
+  position: relative;
+  isolation: isolate;
+}
+
+.aurora {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(64px);
+  opacity: 0.55;
+  mix-blend-mode: screen;
+  will-change: transform;
+}
+.aurora-1 { background: radial-gradient(circle, var(--color-amethyst), transparent 68%); animation: drift-a 17s var(--ease-out-soft) infinite; }
+.aurora-2 { background: radial-gradient(circle, var(--color-aqua), transparent 68%); animation: drift-b 21s var(--ease-out-soft) infinite; }
+.aurora-3 { background: radial-gradient(circle, var(--color-ember), transparent 68%); animation: drift-c 19s var(--ease-out-soft) infinite; }
+.aurora-4 { background: radial-gradient(circle, var(--color-gold), transparent 70%); animation: drift-a 23s var(--ease-out-soft) infinite reverse; }
+
+@keyframes drift-a {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(8%, -10%) scale(1.12); }
+  66% { transform: translate(-6%, 6%) scale(0.94); }
+}
+@keyframes drift-b {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-12%, 8%) scale(1.18); }
+}
+@keyframes drift-c {
+  0%, 100% { transform: translate(0, 0) scale(1.05); }
+  40% { transform: translate(10%, 9%) scale(0.9); }
+  70% { transform: translate(-8%, -8%) scale(1.15); }
+}
+
+/* Floating embers */
+.ember {
+  position: absolute;
+  bottom: -8px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--color-gold);
+  box-shadow: 0 0 8px 1px color-mix(in oklab, var(--color-ember) 80%, transparent);
+  opacity: 0;
+  animation: rise linear infinite;
+}
+@keyframes rise {
+  0% { transform: translateY(0) translateX(0) scale(0.6); opacity: 0; }
+  12% { opacity: 0.9; }
+  85% { opacity: 0.7; }
+  100% { transform: translateY(-340px) translateX(var(--drift, 14px)) scale(1); opacity: 0; }
+}
+
+/* Slow float for the logo mark itself */
+.levitate { animation: levitate 8s ease-in-out infinite; }
+@keyframes levitate {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+
+/* Grain/vignette utility for section depth */
+.vignette::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(120% 80% at 50% 0%, transparent 55%, var(--color-void) 100%);
+}
+
+/* Card hover glow rim */
+.venture-card {
+  position: relative;
+  transition: transform 0.5s var(--ease-out-soft), border-color 0.5s ease;
+}
+.venture-card::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: var(--accent-grad);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+.venture-card:hover { transform: translateY(-6px); }
+.venture-card:hover::before { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .aurora, .ember, .levitate, .spectral-text { animation: none !important; }
+  .venture-card:hover { transform: none; }
+  * { transition-duration: 0.001ms !important; }
+}
