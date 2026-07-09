@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { ventures, type Venture } from "@/lib/site";
 import { Reveal } from "./Reveal";
 
@@ -40,7 +41,7 @@ function Glyph({ kind }: { kind: Venture["glyph"] }) {
         <path d="M13 2.5 6 13h5l-1 8.5L18 10h-5l0-7.5Z" />
       </svg>
     );
-  // yoga — a lotus
+  // yoga, a lotus
   return (
     <svg {...common} aria-hidden="true">
       <path d="M12 20c-4 0-7-2.4-7-5 2.2 0 3.7.7 5 1.8" />
@@ -54,12 +55,17 @@ function Card({ v, i }: { v: Venture; i: number }) {
   const accent = accentByGlyph[v.glyph];
   return (
     <Reveal delay={i * 0.1} as="li" className="h-full">
-      <article
-        className="venture-card group relative flex h-full min-h-[460px] flex-col justify-between overflow-hidden rounded-3xl border border-white/10 p-8 sm:p-9"
-        style={{ ["--accent-grad" as string]: v.gradient }}
+      <Link
+        href={`/ventures/${v.slug}`}
+        className="block h-full rounded-3xl focus-visible:outline-none"
+        aria-label={`${v.name}: ${v.tagline}`}
       >
-        {/* Themed grove, darkened + tinted to the venture's accent */}
-        <div className="absolute inset-0 -z-10">
+        <article
+          className="venture-card group relative flex h-full min-h-[460px] flex-col justify-between overflow-hidden rounded-3xl border border-white/10 p-8 sm:p-9"
+          style={{ ["--accent-grad" as string]: v.gradient }}
+        >
+          {/* Themed grove, darkened + tinted to the venture's accent */}
+          <div className="absolute inset-0 -z-10">
           <Image
             src={imageByGlyph[v.glyph]}
             alt=""
@@ -90,21 +96,33 @@ function Card({ v, i }: { v: Venture; i: number }) {
           <StatusChip status={v.status} accent={accent} />
         </div>
 
-        <div>
-          <p className="font-mono text-xs uppercase tracking-[0.22em] text-mist/70">
-            {v.index} · {v.category}
-          </p>
-          <h3 className="mt-2 font-display text-3xl font-light tracking-tight text-mist">
-            {v.name}
-          </h3>
-          <p className="mt-4 text-[0.975rem] leading-relaxed text-fog">{v.blurb}</p>
+          <div>
+            <p className="font-mono text-xs uppercase tracking-[0.22em] text-mist/70">
+              {v.index} · {v.category}
+            </p>
+            <h3 className="mt-2 font-display text-3xl font-light tracking-tight text-mist">
+              {v.name}
+            </h3>
+            <p className="mt-4 text-[0.975rem] leading-relaxed text-fog">{v.blurb}</p>
 
-          <div
-            className="mt-7 h-px w-full opacity-60 transition-opacity duration-500 group-hover:opacity-100"
-            style={{ background: v.gradient }}
-          />
-        </div>
-      </article>
+            <div
+              className="mt-7 h-px w-full opacity-60 transition-opacity duration-500 group-hover:opacity-100"
+              style={{ background: v.gradient }}
+            />
+
+            <div className="mt-5 flex items-center gap-2 font-mono text-xs uppercase tracking-[0.2em] text-mist/85">
+              <span>Explore venture</span>
+              <span
+                className="transition-transform duration-300 group-hover:translate-x-1"
+                style={{ color: accent }}
+                aria-hidden="true"
+              >
+                →
+              </span>
+            </div>
+          </div>
+        </article>
+      </Link>
     </Reveal>
   );
 }
@@ -134,7 +152,7 @@ export function Ventures() {
         <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <Reveal>
-              <p className="eyebrow">The brew — {ventures.length.toString().padStart(2, "0")} ventures</p>
+              <p className="eyebrow">The brew · {ventures.length.toString().padStart(2, "0")} ventures</p>
             </Reveal>
             <Reveal delay={0.08}>
               <h2 className="mt-5 font-display text-[clamp(2.2rem,5vw,3.4rem)] font-light leading-tight tracking-[-0.01em] text-mist">
@@ -144,7 +162,7 @@ export function Ventures() {
           </div>
           <Reveal delay={0.14}>
             <p className="max-w-xs text-sm leading-relaxed text-fog">
-              Three brands at three stages of the brew — from launching to still
+              Three brands at three stages of the brew, from launching to still
               steeping.
             </p>
           </Reveal>

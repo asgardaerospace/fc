@@ -32,7 +32,7 @@ export function Nav() {
       }`}
     >
       <nav className="mx-auto flex h-[68px] max-w-6xl items-center justify-between px-5 sm:px-8">
-        <a href="#top" className="group flex items-center gap-3" aria-label="Fairy Cauldron — home">
+        <a href="/#top" className="group flex items-center gap-3" aria-label="Fairy Cauldron, home">
           <Image
             src="/cauldron-mark.png"
             alt=""

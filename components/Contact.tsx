@@ -12,7 +12,7 @@ export function Contact() {
     e.preventDefault();
     const subject = encodeURIComponent(`Hello from ${name || "the website"}`);
     const body = encodeURIComponent(
-      `${message}\n\n— ${name}${email ? `\n${email}` : ""}`,
+      `${message}\n\nFrom: ${name}${email ? `\n${email}` : ""}`,
     );
     window.location.href = `mailto:${site.email}?subject=${subject}&body=${body}`;
   }
@@ -39,7 +39,7 @@ export function Contact() {
             <em className="spectral-text not-italic">brew</em> with us?
           </h2>
           <p className="mt-6 max-w-md text-lg leading-relaxed text-fog">
-            Partnerships, press, or a simple hello — the pot&apos;s always warm.
+            Partnerships, press, or a simple hello. The pot&apos;s always warm.
           </p>
 
           <a

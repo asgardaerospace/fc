@@ -16,7 +16,7 @@ const fraunces = Fraunces({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: "Fairy Cauldron — A holding company brewing ventures",
+    default: "Fairy Cauldron: A holding company brewing ventures",
     template: "%s · Fairy Cauldron",
   },
   description: site.tagline,
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: site.legalName }],
   openGraph: {
-    title: "Fairy Cauldron — A holding company brewing ventures",
+    title: "Fairy Cauldron: A holding company brewing ventures",
     description: site.tagline,
     url: site.url,
     siteName: site.name,
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Fairy Cauldron — A holding company brewing ventures",
+    title: "Fairy Cauldron: A holding company brewing ventures",
     description: site.tagline,
     images: ["/og.png"],
   },

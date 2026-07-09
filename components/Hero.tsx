@@ -67,7 +67,7 @@ export function Hero() {
           className="mx-auto mt-7 max-w-xl text-lg leading-relaxed text-fog sm:text-xl"
         >
           Fairy Cauldron conceives, builds, and owns brands across technology,
-          wellness, and lifestyle. One cauldron — many creations.
+          wellness, and lifestyle. One cauldron, many creations.
         </motion.p>
 
         <motion.div

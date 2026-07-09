@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { principles } from "@/lib/site";
 import { Reveal } from "./Reveal";
 
@@ -5,9 +6,27 @@ export function Approach() {
   return (
     <section
       id="approach"
-      className="relative scroll-mt-20 border-y border-white/5 bg-abyss py-28 sm:py-36"
+      className="relative scroll-mt-20 overflow-hidden border-y border-white/5 bg-abyss py-28 sm:py-36"
     >
-      <div className="mx-auto grid max-w-6xl gap-14 px-5 sm:px-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
+      {/* Deep-forest wash for depth */}
+      <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+        <Image
+          src="/img/atmosphere.webp"
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover opacity-[0.12]"
+        />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(180deg, var(--color-abyss), transparent 25%, transparent 75%, var(--color-abyss)), linear-gradient(90deg, transparent 55%, var(--color-abyss))",
+          }}
+        />
+      </div>
+
+      <div className="relative mx-auto grid max-w-6xl gap-14 px-5 sm:px-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
         <div className="lg:sticky lg:top-28 lg:self-start">
           <Reveal>
             <p className="eyebrow">How we brew</p>

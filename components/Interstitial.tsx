@@ -30,8 +30,8 @@ export function Interstitial() {
         </Reveal>
         <Reveal delay={0.1}>
           <p className="mt-7 font-display text-[clamp(1.9rem,4.6vw,3.4rem)] font-light leading-[1.16] tracking-[-0.01em] text-mist">
-            Every venture begins as the same thing — a spark, a little fire, and
-            the patience to let it{" "}
+            Every venture begins the same way: a spark, a little fire, and the
+            patience to let it{" "}
             <em className="spectral-text not-italic">become something</em>.
           </p>
         </Reveal>

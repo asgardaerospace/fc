@@ -27,7 +27,7 @@ export function Footer() {
         <div className="grid gap-12 md:grid-cols-[1.4fr_1fr_1fr]">
           {/* Brand */}
           <div>
-            <a href="#top" className="flex items-center gap-3" aria-label="Fairy Cauldron — home">
+            <a href="/#top" className="flex items-center gap-3" aria-label="Fairy Cauldron, home">
               <Image src="/cauldron-mark.png" alt="" width={44} height={46} className="h-11 w-auto" />
               <span className="font-display text-xl text-mist">Fairy Cauldron</span>
             </a>
