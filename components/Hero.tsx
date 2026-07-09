@@ -90,15 +90,6 @@ export function Hero() {
             Get in touch
           </a>
         </motion.div>
-
-        <motion.div
-          {...rise(0.64)}
-          className="mt-10 flex items-center justify-center gap-6 font-mono text-xs uppercase tracking-[0.22em] text-fog/80"
-        >
-          <span>Est. {site.founded}</span>
-          <span className="h-3 w-px bg-white/20" />
-          <span>Three ventures in the pot</span>
-        </motion.div>
       </div>
 
       {/* Scroll cue */}
