@@ -35,4 +35,7 @@ next-env.d.ts
 /oldsite_pages
 /Images
 /out.txt
-"Logo placeholder.png"
+/Logo placeholder.png
+/1.png
+/2.png
+/*.png
