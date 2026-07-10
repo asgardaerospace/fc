@@ -1,5 +1,6 @@
 import Image from "next/image";
-import { nav, site } from "@/lib/site";
+import Link from "next/link";
+import { nav, primaryCta, site } from "@/lib/site";
 
 const socialIcons: Record<string, React.ReactNode> = {
   instagram: (
@@ -22,27 +23,36 @@ export function Footer() {
   const socials = Object.entries(site.social).filter(([, url]) => url);
 
   return (
-    <footer className="relative border-t border-white/10 bg-abyss">
-      <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
-        <div className="grid gap-12 md:grid-cols-[1.4fr_1fr_1fr]">
+    <footer className="relative overflow-hidden border-t border-white/10 bg-abyss">
+      <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8 sm:py-20">
+        <div className="grid gap-12 md:grid-cols-[1.5fr_1fr_1fr]">
           {/* Brand */}
           <div>
-            <a href="/#top" className="flex items-center gap-3" aria-label="Fairy Cauldron, home">
+            <Link href="/" className="flex items-center gap-3" aria-label="Fairy Cauldron, home">
               <Image src="/cauldron-mark.png" alt="" width={44} height={46} className="h-11 w-auto" />
               <span className="font-display text-xl text-mist">Fairy Cauldron</span>
-            </a>
-            <p className="mt-5 max-w-xs text-sm leading-relaxed text-fog">{site.tagline}</p>
+            </Link>
+            <p className="mt-5 max-w-xs font-display text-lg font-light italic leading-snug text-fog">
+              {site.shortTagline}
+            </p>
+            <Link
+              href={primaryCta.href}
+              className="mt-7 inline-flex items-center gap-2 rounded-full border border-amethyst/40 bg-amethyst/10 px-5 py-2.5 text-sm text-mist transition-colors duration-300 hover:border-amethyst/70 hover:bg-amethyst/20"
+            >
+              {primaryCta.label}
+              <span aria-hidden="true">→</span>
+            </Link>
           </div>
 
           {/* Explore */}
           <nav aria-label="Footer">
             <p className="font-mono text-xs uppercase tracking-[0.22em] text-faint">Explore</p>
             <ul className="mt-5 flex flex-col gap-3">
-              {nav.map((item) => (
+              {nav.slice(1).map((item) => (
                 <li key={item.href}>
-                  <a href={item.href} className="text-sm text-fog transition-colors hover:text-mist">
+                  <Link href={item.href} className="text-sm text-fog transition-colors hover:text-mist">
                     {item.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -54,6 +64,9 @@ export function Footer() {
             <address className="mt-5 flex flex-col gap-3 text-sm not-italic leading-relaxed text-fog">
               <a href={`mailto:${site.email}`} className="transition-colors hover:text-mist">
                 {site.email}
+              </a>
+              <a href={`mailto:${site.venturesEmail}`} className="transition-colors hover:text-mist">
+                {site.venturesEmail}
               </a>
               <span>
                 {site.address.line1}

@@ -28,6 +28,14 @@
   --color-rose: #f0508f;
   --color-verdant: #46c97e;
 
+  /* Spectrum, extended — world identities. Still emerge from darkness. */
+  --color-lavender: #c9a8f0; /* movement */
+  --color-teal: #19b5ab; /* practice */
+  --color-magenta: #d451c9; /* knowledge */
+  --color-plum: #9d5bb0; /* knowledge */
+  --color-coral: #ff7d63; /* wellness, goods */
+  --color-indigo: #5647d6; /* ventures */
+
   /* Type roles */
   --font-display: var(--font-fraunces), Georgia, "Times New Roman", serif;
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
@@ -237,9 +245,210 @@ body {
 .venture-card:hover { transform: translateY(-6px); }
 .venture-card:hover::before { opacity: 1; }
 
+/* ============================================================
+   Worlds — atmospheric card that gains its colour on approach.
+   Uses --accent-grad and --accent (a single colour) set inline.
+   ============================================================ */
+.world-card {
+  position: relative;
+  transition: transform 0.6s var(--ease-out-soft), border-color 0.6s ease;
+}
+.world-card::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: var(--accent-grad);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+}
+.world-card:hover { transform: translateY(-6px); }
+.world-card:hover::before { opacity: 1; }
+
+/* ============================================================
+   Floating words — distant fragments of thought in the forest.
+   Rendered in the Introduction background. Each sets --dur/--delay.
+   ============================================================ */
+.drift-word {
+  position: absolute;
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: color-mix(in oklab, var(--color-mist) 24%, transparent);
+  opacity: 0;
+  will-change: transform, opacity;
+  animation: drift-word var(--dur, 22s) ease-in-out var(--delay, 0s) infinite;
+  user-select: none;
+}
+@keyframes drift-word {
+  0% { opacity: 0; transform: translateY(24px) scale(0.98); }
+  18% { opacity: var(--peak, 0.5); }
+  50% { transform: translateY(-14px) scale(1); }
+  82% { opacity: var(--peak, 0.5); }
+  100% { opacity: 0; transform: translateY(-44px) scale(1.02); }
+}
+
+/* ============================================================
+   Mist — a slow horizontal drift, layered between sections for depth.
+   ============================================================ */
+.mist {
+  position: absolute;
+  inset: -20% -30%;
+  pointer-events: none;
+  background:
+    radial-gradient(40% 60% at 20% 40%, color-mix(in oklab, var(--color-mist) 8%, transparent), transparent 70%),
+    radial-gradient(46% 50% at 70% 60%, color-mix(in oklab, var(--color-amethyst) 10%, transparent), transparent 72%);
+  filter: blur(30px);
+  opacity: 0.55;
+  will-change: transform;
+  animation: mist-drift 34s ease-in-out infinite;
+}
+.mist-2 {
+  animation-duration: 46s;
+  animation-direction: reverse;
+  opacity: 0.4;
+}
+@keyframes mist-drift {
+  0%, 100% { transform: translate3d(-3%, 0, 0); }
+  50% { transform: translate3d(4%, -2%, 0); }
+}
+
+/* ============================================================
+   Particle field — gentle rising motes. Used behind the immersive
+   navigation and select scenes. Each mote sets its own vars.
+   ============================================================ */
+.mote {
+  position: absolute;
+  bottom: -6px;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--mote, color-mix(in oklab, var(--color-mist) 70%, var(--color-amethyst)));
+  box-shadow: 0 0 7px 1px var(--mote-glow, color-mix(in oklab, var(--color-amethyst) 60%, transparent));
+  opacity: 0;
+  will-change: transform, opacity;
+  animation: mote-rise var(--dur, 14s) linear var(--delay, 0s) infinite;
+}
+@keyframes mote-rise {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: 0.8; }
+  90% { opacity: 0.5; }
+  100% { transform: translateY(-92vh) translateX(var(--drift, 20px)); opacity: 0; }
+}
+
+/* ============================================================
+   Status light — a slow breathing pulse for the Laboratory.
+   ============================================================ */
+.status-dot {
+  position: relative;
+  display: inline-flex;
+  height: 0.5rem;
+  width: 0.5rem;
+  border-radius: 50%;
+  background: var(--dot, var(--color-fog));
+}
+.status-dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: inherit;
+  animation: status-breathe 2.8s ease-in-out infinite;
+}
+@keyframes status-breathe {
+  0%, 100% { transform: scale(1); opacity: 0.55; }
+  50% { transform: scale(2.6); opacity: 0; }
+}
+/* a resting idea does not pulse */
+.status-dot.is-still::after { animation: none; opacity: 0; }
+
+/* ============================================================
+   Spark — a single mote that rises from the venture CTA on hover.
+   ============================================================ */
+.spark-cta { position: relative; overflow: hidden; }
+.spark-cta .spark {
+  position: absolute;
+  left: var(--x, 50%);
+  bottom: 10%;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--color-gold);
+  box-shadow: 0 0 8px 2px color-mix(in oklab, var(--color-gold) 70%, transparent);
+  opacity: 0;
+  pointer-events: none;
+}
+.spark-cta:hover .spark {
+  animation: spark-up 1.5s ease-out var(--delay, 0s) infinite;
+}
+@keyframes spark-up {
+  0% { transform: translateY(0) scale(0.6); opacity: 0; }
+  15% { opacity: 1; }
+  100% { transform: translateY(-46px) scale(1); opacity: 0; }
+}
+
+/* ============================================================
+   Flow — an organic breath for the Movement world.
+   ============================================================ */
+.flow-breathe {
+  animation: flow-breathe 9s ease-in-out infinite;
+  will-change: transform;
+}
+@keyframes flow-breathe {
+  0%, 100% { transform: scale(1) translateY(0); }
+  50% { transform: scale(1.05) translateY(-1.5%); }
+}
+
+/* ============================================================
+   Method sigils — each principle carries its own small behaviour.
+   ============================================================ */
+@keyframes sigil-orbit { to { transform: rotate(360deg); } }
+@keyframes sigil-draw {
+  0% { stroke-dashoffset: 88; }
+  60%, 100% { stroke-dashoffset: 0; }
+}
+@keyframes sigil-morph {
+  0%, 100% { border-radius: 44% 56% 55% 45% / 48% 44% 56% 52%; transform: rotate(0deg); }
+  50% { border-radius: 58% 42% 45% 55% / 55% 58% 42% 45%; transform: rotate(9deg); }
+}
+@keyframes sigil-hue {
+  0%, 100% { filter: hue-rotate(0deg); }
+  50% { filter: hue-rotate(46deg); }
+}
+@keyframes sigil-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.9; }
+  50% { transform: scale(1.12); opacity: 1; }
+}
+
+/* ============================================================
+   Immersive navigation — staggered link entrance.
+   ============================================================ */
+.nav-veil-item {
+  opacity: 0;
+  transform: translateY(18px);
+}
+.nav-veil.is-open .nav-veil-item {
+  animation: veil-in 0.6s var(--ease-out-soft) forwards;
+  animation-delay: var(--i, 0ms);
+}
+@keyframes veil-in {
+  to { opacity: 1; transform: translateY(0); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .aurora, .ember, .levitate, .spectral-text { animation: none !important; }
-  .venture-card:hover { transform: none; }
+  .aurora, .ember, .levitate, .spectral-text,
+  .drift-word, .mist, .mote, .status-dot::after, .spark,
+  .flow-breathe, .nav-veil.is-open .nav-veil-item {
+    animation: none !important;
+  }
+  .drift-word { opacity: 0.32; }
+  .nav-veil-item { opacity: 1; transform: none; }
+  .venture-card:hover, .world-card:hover { transform: none; }
   * { transition-duration: 0.001ms !important; }
 }

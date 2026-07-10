@@ -1,9 +1,10 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { VideoBackground } from "./VideoBackground";
-import { site } from "@/lib/site";
+import { hero } from "@/lib/site";
 
 export function Hero() {
   const reduce = useReducedMotion();
@@ -28,7 +29,7 @@ export function Hero() {
         {/* Brand mark, rising from the grove */}
         <motion.div
           {...rise(0.05)}
-          className="relative mx-auto mb-8 w-[128px] sm:w-[164px]"
+          className="relative mx-auto mb-8 w-[122px] sm:w-[158px]"
         >
           <div
             className="absolute inset-0 -z-10 scale-150 opacity-70 blur-2xl"
@@ -50,45 +51,54 @@ export function Hero() {
         </motion.div>
 
         <motion.p {...rise(0.18)} className="eyebrow">
-          A Holding Company · {site.location}
+          {hero.eyebrow}
         </motion.p>
 
         <motion.h1
           {...rise(0.28)}
-          className="mt-5 font-display text-[clamp(3rem,9vw,6rem)] font-light leading-[0.95] tracking-[-0.02em] text-mist"
+          className="mt-5 font-display text-[clamp(3rem,9vw,6.2rem)] font-light leading-[0.95] tracking-[-0.02em] text-mist"
         >
-          Where ventures
+          {hero.headlineLead}
           <br />
-          are <em className="spectral-text font-normal not-italic">brewed</em>.
+          <em className="spectral-text font-normal not-italic">
+            {hero.headlineAccent}
+          </em>
+          .
         </motion.h1>
 
         <motion.p
           {...rise(0.4)}
-          className="mx-auto mt-7 max-w-xl text-lg leading-relaxed text-fog sm:text-xl"
+          className="mx-auto mt-7 max-w-2xl text-lg leading-relaxed text-fog sm:text-xl"
         >
-          Fairy Cauldron conceives, builds, and owns brands across technology,
-          wellness, and lifestyle. One cauldron, many creations.
+          {hero.sub}
+        </motion.p>
+
+        <motion.p
+          {...rise(0.48)}
+          className="mt-4 font-mono text-xs uppercase tracking-[0.28em] text-faint"
+        >
+          {hero.kicker}
         </motion.p>
 
         <motion.div
-          {...rise(0.52)}
+          {...rise(0.6)}
           className="mt-9 flex flex-wrap items-center justify-center gap-3"
         >
-          <a
-            href="#ventures"
+          <Link
+            href={hero.ctaPrimary.href}
             className="group inline-flex items-center gap-2 rounded-full bg-mist px-6 py-3.5 text-sm font-medium text-void transition-transform duration-300 hover:scale-[1.03]"
           >
-            See what&apos;s brewing
-            <span className="transition-transform duration-300 group-hover:translate-y-0.5">
-              ↓
+            {hero.ctaPrimary.label}
+            <span className="transition-transform duration-300 group-hover:translate-x-0.5">
+              →
             </span>
-          </a>
-          <a
-            href={`mailto:${site.email}`}
+          </Link>
+          <Link
+            href={hero.ctaSecondary.href}
             className="inline-flex items-center rounded-full border border-white/20 bg-white/5 px-6 py-3.5 text-sm text-mist backdrop-blur-sm transition-colors duration-300 hover:border-white/45"
           >
-            Get in touch
-          </a>
+            {hero.ctaSecondary.label}
+          </Link>
         </motion.div>
       </div>
 
@@ -99,7 +109,7 @@ export function Hero() {
         className="absolute bottom-6 left-1/2 z-10 -translate-x-1/2"
         initial={reduce ? undefined : { opacity: 0 }}
         animate={reduce ? undefined : { opacity: 1 }}
-        transition={{ delay: 1.1, duration: 1 }}
+        transition={{ delay: 1.2, duration: 1 }}
       >
         <span className="flex h-9 w-6 items-start justify-center rounded-full border border-white/25 p-1.5">
           <span className="h-2 w-1 rounded-full bg-white/70 motion-safe:animate-[scrollcue_1.8s_ease-in-out_infinite]" />
